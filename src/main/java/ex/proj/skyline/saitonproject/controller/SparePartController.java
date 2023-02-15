@@ -10,9 +10,9 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api/spares")
 public class SparePartController {
 
-    @GetMapping
+    @GetMapping("/api")
     public String getListSpares() {
-        return "index";
+        return "spare";
     }
 
     @PostMapping
