@@ -7,3 +7,4 @@ Start project
 - Java 17
 - Spring Framework
 - REST API
+- JavaScript
