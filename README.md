@@ -8,3 +8,4 @@ Start project
 - Spring Framework
 - REST API
 - JavaScript
+- View.JS
