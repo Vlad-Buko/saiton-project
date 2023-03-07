@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>ex.proj.skyline</groupId>
 	<artifactId>saiton-project</artifactId>
-	<version>saiton-project-v0.3</version>
+	<version>saiton-proj-v0.3ts</version>
 	<name>saiton-project</name>
 	<description>Real project writing on clear Java</description>
 	<properties>

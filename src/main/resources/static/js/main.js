@@ -1,11 +1,28 @@
+
+function getIndex(list,id) {
+    for (var i= 0; i < list.length; i++) {
+        if (list[i].id === id) {
+            return i;
+        }
+    }
+    return -1;
+}
+
 var spareAPi = Vue.resource('/autoshop/api/spares/{/id}');
 
 Vue.component('spare-form', {
-    props: ['spares'],
+    props: ['spares', 'spareAttr'],
     data: function () {
         return {
-            text: ''
+            text: '',
+            id: ''
         }
+    },
+    watch: {
+      spareAttr : function(newVal, oldVal) {
+          this.text = newVal.text;
+          this.id = newVal.id;
+      }
     },
     template:
         '<div>' +
@@ -16,32 +33,60 @@ Vue.component('spare-form', {
         save: function () {
             var spare = {text: this.text};
 
-            spareAPi.save({}, spare).then(result =>
-                result.json().then(data => {
-                    this.spares.push(data);
-                    this.text = ''
-                    }
-                ))
+            if (this.id) {
+                spareAPi.update({
+                    id: this.id
+                }, spare).then(result => result.json().then(data => {
+                    var index = getIndex(data.id);
+                    this.spare.splice(index, 1, data);
+                }))
+            } else {
+                spareAPi.save({}, spare).then(result =>
+                    result.json().then(data => {
+                            this.spares.push(data);
+                            this.text = ''
+                        }
+                    ))
+            }
         }
     }
 })
 
 Vue.component('spare-row', {
-    props: ['spare1'],
-    template: '<div><i>({{spare1.id}})</i> {{spare1.text}}</div>'
+    props: ['spare', 'editMethod'],
+    template: '<div><i>({{spare.id}})</i> {{spare.text}}' +
+        '<span>' +
+        '<input type="button" value="Edit" @click="edit" />' +
+        '</span>' +
+        '</div',
+    methods: {
+        edit: function () {
+            this.editMethod(this.spare );
+        }
+    }
 })
 
 Vue.component('spares-list', {
     props: ['spares'],
+    data:function () {
+        return {
+            spare: null
+        }
+    },
     template: '<div>' +
-        '<spare-form :spares="spares" />' +
-        '<spare-row v-for="spare in spares" :key="spare.id" :spare1="spare" />' +
+        '<spare-form :spares="spares", :spareAttr="spare" />' +
+        '<spare-row v-for="spare in spares" :key="spare.id" :spare="spare" :editMethod="editMethod" />' +
                 '</div>',
     // В темплейт в цикле v-for также зависит значение "spare in (наше название перерменной)
     created: function () {
         spareAPi.get().then(result =>
             result.json().then(data =>
-                data.forEach(spare1 => this.spares.push(spare1))))
+                data.forEach(spare => this.spares.push(spare))))
+    },
+    methods: {
+        editMethod: function () {
+            this.spare = spare;
+        }
     }
 })
 
