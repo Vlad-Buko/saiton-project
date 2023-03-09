@@ -1,12 +1,15 @@
 package ex.proj.skyline.saitonproject.controller;
 
-import ex.proj.skyline.saitonproject.exceptions.NotFoundException;
+import com.fasterxml.jackson.annotation.JsonView;
+import ex.proj.skyline.saitonproject.dto.Note;
+import ex.proj.skyline.saitonproject.dto.Views;
+import ex.proj.skyline.saitonproject.repository.NoteRepository;
+import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
-import java.util.HashMap;
+import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Created by Vladislav Domaniewski
@@ -16,75 +19,39 @@ import java.util.Map;
 @RequestMapping("/autoshop/api/spares")
 public class SparePartController {
 
-    private int counter = 4;
+    private final NoteRepository noteRepository;
 
-
-
-    private List<Map<String, String>> messages = new ArrayList<Map<String, String>>() {{
-        add(new HashMap<String, String>() {{ put("id", "1"); put("text", "First spare"); }});
-        add(new HashMap<String, String>() {{ put("id", "2"); put("text", "Second spare"); }});
-        add(new HashMap<String, String>() {{ put("id", "3"); put("text", "Third spare"); }});
-    }};
+    @Autowired
+    public SparePartController(NoteRepository noteRepository) {
+        this.noteRepository = noteRepository;
+    }
 
     @GetMapping
-    public List<Map<String, String>> list() {
-        return messages;
+    @JsonView(Views.idName.class)
+    public List<Note> list() {
+        return noteRepository.findAll();
     }
 
     @GetMapping("{id}")
-    public Map<String, String> getOne(@PathVariable String id) {
-        return getMessage(id);
-    }
-
-    private Map<String, String> getMessage(@PathVariable String id) {
-        return messages.stream()
-                .filter(message -> message.get("id").equals(id))
-                .findFirst()
-                .orElseThrow(NotFoundException::new);
+    public Note getOne(@PathVariable("id") Note note) {
+        return note;
     }
 
     @PostMapping
-    public Map<String, String> create(@RequestBody Map<String, String> message) {
-        message.put("id", String.valueOf(counter++));
-
-        messages.add(message);
-
-        return message;
+    public Note create(@RequestBody Note note) {
+        note.setCreationDateTime(LocalDateTime.now());
+        return noteRepository.save(note);
     }
 
     @PutMapping("{id}")
-    public Map<String, String> update(@PathVariable String id, @RequestBody Map<String, String> message) {
-        Map<String, String> messageFromDb = getMessage(id);
-
-        messageFromDb.putAll(message);
-        messageFromDb.put("id", id);
-
-        return messageFromDb;
+    public Note update(@PathVariable("id") Note noteFromDb,
+                       @RequestBody Note note) {
+        BeanUtils.copyProperties(note, noteFromDb, "id");
+        return noteRepository.save(noteFromDb);
     }
 
     @DeleteMapping("{id}")
-    public void delete(@PathVariable String id) {
-        Map<String, String> message = getMessage(id);
-
-        messages.remove(message);
+    public void delete(@PathVariable("id") Note note) {
+        noteRepository.delete(note);
     }
-//    @GetMapping("/api")
-//    public String getListSpares() {
-//        return "spare";
-//    }
-//
-//    @PostMapping
-//    public void setSpares() {
-//
-//    }
-//
-//    @PatchMapping
-//    public void updateSparePart() {
-//
-//    }
-//
-//    @DeleteMapping
-//    public void deleteSparePartFromList() {
-//
-//    }
 }
