@@ -6,6 +6,7 @@ Start project
 
 - Java 17
 - Spring Framework
+- Spring Security
 - REST API
 - JavaScript
 - View.JS
