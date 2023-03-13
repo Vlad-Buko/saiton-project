@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>ex.proj.skyline</groupId>
 	<artifactId>saiton-project</artifactId>
-	<version>saiton-proj-v0.3sec</version>
+	<version>saiton-proj-v0.3.1-s</version>
 	<name>saiton-project</name>
 	<description>Real project writing on clear Java</description>
 	<properties>
@@ -44,7 +44,10 @@
 			<version>3.0.0</version>
 		</dependency>
 		<!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-security -->
-
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-security</artifactId>
+		</dependency>
 		<!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-autoconfigure -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
