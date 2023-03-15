@@ -52,4 +52,10 @@ public class PersonDetails implements UserDetails {
     public boolean isEnabled() {
         return true;
     }
+
+
+    // Для получения данных аутентифицированного пользователя
+    public Person getPerson() {
+        return this.person;
+    }
 }
