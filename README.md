@@ -4,7 +4,7 @@ Start project
 
 ## TECH STACK 
 
-- Java 17
+- Java 11
 - Spring Framework
 - Spring Security
 - REST API
