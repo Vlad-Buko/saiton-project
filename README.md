@@ -7,6 +7,7 @@ Start project
 - Java 11
 - Spring Framework
 - Spring Security
+- Hibernate
 - REST API
 - JavaScript
 - View.JS
