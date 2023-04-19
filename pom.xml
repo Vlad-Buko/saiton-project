@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>ex.proj.skyline</groupId>
 	<artifactId>saiton-project</artifactId>
-	<version>saiton-proj-v0.3.2.2</version>
+	<version>saiton-proj-v0.3.2.3</version>
 	<name>saiton-project</name>
 	<description>Real project writing on clear Java</description>
 	<properties>
@@ -61,6 +61,21 @@
 			<version>2.5.0.RELEASE</version>
 		</dependency>
 
+		<dependency>
+			<groupId>org.webjars</groupId>
+			<artifactId>jquery</artifactId>
+			<version>3.4.1</version>
+		</dependency>
+		<dependency>
+			<groupId>org.webjars</groupId>
+			<artifactId>bootstrap</artifactId>
+			<version>4.3.1</version>
+		</dependency>
+		<dependency>
+			<groupId>org.webjars</groupId>
+			<artifactId>webjars-locator-core</artifactId>
+		</dependency>
+
 		<!-- https://mvnrepository.com/artifact/org.projectlombok/lombok -->
 		<dependency>
 			<groupId>org.projectlombok</groupId>
@@ -78,6 +93,10 @@
 			<groupId>org.postgresql</groupId>
 			<artifactId>postgresql</artifactId>
 			<version>42.5.4</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-oauth2-client</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
