@@ -1,6 +1,5 @@
 package ex.proj.skyline.saitonproject.service;
 
-import ex.proj.skyline.saitonproject.config.security.PersonDetails;
 import ex.proj.skyline.saitonproject.dto.Person;
 import ex.proj.skyline.saitonproject.repository.PersonRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +15,7 @@ import java.util.Optional;
  */
 
 @Service
-public class PersonService implements UserDetailsService {
+public class PersonService {
     private final PersonRepository personRepository;
 
     @Autowired
@@ -24,14 +23,4 @@ public class PersonService implements UserDetailsService {
         this.personRepository = personRepository;
     }
 
-    @Override
-    public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
-        Optional<Person> person = personRepository.findByUsername(s);
 
-        
-        if (person.isEmpty()) {
-            throw new UsernameNotFoundException("User not found!");
-        }
-        return new PersonDetails(person.get());
-    }
-}
